@@ -19,3 +19,10 @@ def generate_params(obj):
         child.text = v
     xml = etree.tostring(root, xml_declaration=True, encoding="GBK", standalone="yes").replace("\n", "")
     return xml
+
+
+def convert_xml_to_json(xml):
+    """
+    convert xml to json
+    """
+    pass
