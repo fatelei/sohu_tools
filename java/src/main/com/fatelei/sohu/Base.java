@@ -1,5 +1,7 @@
 package com.fatelei.sohu;
 
-public class Base {
-
+interface SohuClient {
+	String get();
+	String post();
 }
+
