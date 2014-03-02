@@ -1,0 +1,9 @@
+{
+  "name": "sohunews_web",
+  "version": "0.0.1",
+  "directory": "static/",
+  "dependencies": {
+    "bootstrap": "*",
+    "jquery": "*"
+  }
+}

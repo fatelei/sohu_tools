@@ -23,18 +23,21 @@ class SohuNewsAPIOAuth(SohuNewsAPIBase):
         self.api = "login"
 
     def custom_headers(self):
-    	headers = {}
-    	headers["User-Agent"] = USER_AGENT
-    	headers["Content-Type"] = "text/plain; charset=ISO-8859-1"
-    	return headers
+        headers = {}
+        headers["User-Agent"] = USER_AGENT
+        headers["Content-Type"] = "text/plain; charset=ISO-8859-1"
+        return headers
 
     def execute(self, method, uri, data, headers):
-    	try:
-    		func = getattr(requests, method)
-    		resp = func(uri, headers=headers, data=data)
-    		return resp
-    	except Exception as e:
-    		logging.warning(e)
+        try:
+            func = getattr(requests, method)
+            resp = func(uri, headers=headers, data=data)
+            return resp
+        except Exception as e:
+            logging.warning(e)
+
+    def convert_to_json(self):
+        pass
 
     def post(self, userid, password):
         uri = SOHUNEWS_API[self.api]
@@ -51,8 +54,8 @@ class SohuNewsAPIOAuth(SohuNewsAPIBase):
 
 
 if __name__ == "__main__":
-	client = SohuNewsAPIOAuth()
-	resp = client.post("fate_lei@sohu.com", "fate123")
-	print resp.status_code
-	print resp.text
+    client = SohuNewsAPIOAuth()
+    resp = client.post("fate_lei@sohu.com", "fate123")
+    print resp.status_code
+    print resp.text
 

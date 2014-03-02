@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<!-- css -->
+		<link rel="stylesheet" href="{{static_url('bootstrap/dist/css/boots	trap.min.css')}}">
+
+		{% block css %}
+		{% end %}
+	</head>
+	<body>
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<!-- brand -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="nav-collapse">
+						<span class="sr-only">Toggle Navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="#" class="navbar-brand">搜狐新闻</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="nav-collapse">
+					<form class="navbar-form navbar-right" role="form">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="email">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" placeholder="password">
+						</div>
+						<button type="submit" class="btn btn-default">Login</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			{% block content %}
+			{% end %}
+		</div>
+		<!-- javascript -->
+		<script src="{{static_url('jquery/dist/jquery.min.js')}}"></script>
+		<script src="{{static_url('bootstrap/dist/js/bootstrap.min.js')}}"></script>
+		{% block js %}
+		{% end %}	
+	</body>
+</html>

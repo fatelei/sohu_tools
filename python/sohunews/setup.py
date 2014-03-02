@@ -4,7 +4,7 @@
 from setuptools import find_packages, setup
 
 
-install_requires = ['requests', 'lxml']
+install_requires = ['requests', 'lxml', 'tornado']
 
 entry_points = """
 """
