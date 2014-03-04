@@ -8,6 +8,7 @@ import requests
 import logging
 
 from hashlib import md5
+from lxml import etree
 
 from sohunews.core.base import SohuNewsAPIBase
 from sohunews.common.macro import SOHUNEWS_API, USER_AGENT
@@ -34,10 +35,14 @@ class SohuNewsAPIOAuth(SohuNewsAPIBase):
             resp = func(uri, headers=headers, data=data)
             return resp
         except Exception as e:
-            logging.warning(e)
+            raise e
 
-    def convert_to_json(self):
-        pass
+    def convert_to_json(self, resp):
+        xml = etree.fromstring(resp.text.encode("utf8"))
+        auth_info = {}
+        auth_info['token'] = xml.xpath("//token")[0].text
+        auth_info['user_id'] = xml.xpath("//userid")[0].text
+        return auth_info
 
     def post(self, userid, password):
         uri = SOHUNEWS_API[self.api]
@@ -50,12 +55,11 @@ class SohuNewsAPIOAuth(SohuNewsAPIBase):
         data = generate_params(self)
         headers = self.custom_headers()
         resp = self.execute("post", uri, data, headers)
-        return resp
+        return self.convert_to_json(resp)
 
 
 if __name__ == "__main__":
     client = SohuNewsAPIOAuth()
     resp = client.post("fate_lei@sohu.com", "fate123")
-    print resp.status_code
-    print resp.text
+    print resp
 

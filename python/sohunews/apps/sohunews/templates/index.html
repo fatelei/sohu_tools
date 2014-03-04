@@ -1,20 +1,35 @@
 {% extends "base.html" %}
 
+{% block css %}
+<link rel="stylesheet" href="{{static_url('css/news.css')}}">
+{% end %}
+
 {% block content %}
 <div class="row" id="channels">
-
 </div>
 
 <div class="row" id="news">
-	
 </div>
-
 {% end %}
 
 {% block js %}
+<script src="{{static_url('js/channels.js')}}"></script>
+<script src="{{static_url('js/news.js')}}"></script>
+<script src="{{static_url('js/login.js')}}"></script>
 <script>
 	$(document).ready(function () {
-		
+		$.ajax({
+			url: "/channles",
+			dataType: "json",
+			success: function (data, textStatus, jqXHR) {
+				channels(data);
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log(errorThrown);
+			}
+		});
+		get_specific_news("/news/1/1");
+		login();
 	});
 </script>
 {% end %}

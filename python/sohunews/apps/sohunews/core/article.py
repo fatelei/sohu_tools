@@ -1,20 +1,20 @@
+#!/usr/bin/python
 #-*-coding: utf8-*-
 
 import requests
+
 import logging
-import time
+
+from lxml import etree
 
 from sohunews.core.base import SohuNewsAPIBase
-from sohunews.common.macro import SOHUNEWS_API, USER_AGENT
+from sohunews.common.macro import USER_AGENT
 
 
-class SohuNewsAPINews(SohuNewsAPIBase):
+class SohuNewsAPIArticle(SohuNewsAPIBase):
 
     def __init__(self):
-    	self.pid = "5841771463635808312"
-    	self.gid = "02ffff11061111ef90d4ea6bf9f4c1c59fb44da709fd1a"
-    	self.p1 = "NTg0MTcyMTEwOTY4NjY5MzkzMg%3D%3D"
-        self.api = "news"
+        self.api = "article"
 
     def custom_headers(self):
         headers = {}
@@ -30,17 +30,19 @@ class SohuNewsAPINews(SohuNewsAPIBase):
         except Exception as e:
             raise e
 
-    def get(self, channelId, page=1, token=None):
-        uri = SOHUNEWS_API[self.api]
-        visitTime = int(time.time() * 1000)
-        url = uri.format(channelId, page, visitTime, self.p1, self.gid, self.pid)
-        if token:
-        	url += "&token=" + token
+    def convert_to_json(self, resp):
+        root = etree.fromstring(resp.text.encode("utf8"))
+        data = {}
+        data['title'] = root.xpath("//title")[0].text
+        data['content'] = root.xpath("//content")[0].text
+        return data
+
+    def get(self, url):
         headers = self.custom_headers()
         resp = self.execute("get", url, headers)
-        return resp.json()
+        return self.convert_to_json(resp)
 
 if __name__ == "__main__":
     client = SohuNewsAPINews()
-    resp = client.get(1)
+    resp = client.get("http://zcache.k.sohu.com/api/news/cdn/v1/article.go/16633271/1/613/0/3/1/18/18/3/1/1/1393751199000.xml")
     print resp

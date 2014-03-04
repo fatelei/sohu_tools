@@ -7,6 +7,8 @@ from setuptools import find_packages, setup
 install_requires = ['requests', 'lxml', 'tornado']
 
 entry_points = """
+	[console_scripts]
+	sohuweb=sohunews.web.app:run
 """
 
 setup(

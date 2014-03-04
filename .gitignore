@@ -4,3 +4,6 @@ eggs
 *.pyc
 *.egg-info
 parts
+bin
+jquery
+bootstrap

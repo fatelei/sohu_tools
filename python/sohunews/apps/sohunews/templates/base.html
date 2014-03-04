@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		<!-- css -->
-		<link rel="stylesheet" href="{{static_url('bootstrap/dist/css/boots	trap.min.css')}}">
+		<link rel="stylesheet" href="{{static_url('bootstrap/dist/css/bootstrap.min.css')}}">
 
 		{% block css %}
 		{% end %}
@@ -22,19 +22,26 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a href="#" class="navbar-brand">搜狐新闻</a>
+					<a href="/" class="navbar-brand">搜狐新闻</a>
 				</div>
 
+				
 				<div class="collapse navbar-collapse" id="nav-collapse">
-					<form class="navbar-form navbar-right" role="form">
+					{% if not user_info %}
+					<form class="navbar-form navbar-right" role="form" id="loginForm">
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="email">
+							<input type="text" class="form-control" placeholder="email" id="email">
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control" placeholder="password">
+							<input type="password" class="form-control" placeholder="password" id="password">
 						</div>
-						<button type="submit" class="btn btn-default">Login</button>
+						<button type="submit" class="btn btn-default" id="login">Login</button>
 					</form>
+					{% else %}
+					<ul class="nav navbar-nav navbar-right" id="profile">
+						<li><a href="#">{{user_info['userid']}}</a></li>
+					</ul>
+					{% end %}
 				</div>
 			</div>
 		</nav>
